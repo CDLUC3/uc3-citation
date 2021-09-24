@@ -13,7 +13,7 @@ For example `Uc3::Citation.fetch(doi: '10.1234/article.ef34', work_type: 'articl
 ## Basic Usage -
 
 Add the following to your Gemfile and then run bundle install:
-`gem 'uc3-citation'
+`gem 'uc3-citation', git: 'https://github.com/CDLUC3/uc3-citation', branch: 'main''
 
 Once installed you can then use the service like this:
 ```ruby
@@ -33,11 +33,13 @@ Once installed you can then use the service like this:
   #   Diet of Common Predatory Coral Reef Fishes.” [Article]. Coral Reefs 31 (2): 383–88.
   #   https://doi.org/10.1007/s00338-011-0845-0
   #
-  article = Uc3::Citation.fetch(doi: '10.1234/article.ef34', work_type: 'article')
-  book = Uc3::Citation.fetch(doi: 'https://doi.org/10.1234/book.ef34', work_type: 'book')
-  dmp = Uc3::Citation.fetch(doi: 'https://dx.doi.org/10.1234/dmp.ef34', work_type: 'output_management_plan')
-  dataset = Uc3::Citation.fetch(doi: 'doi:10.1234/dataset.ef34', work_type: 'dataset')
-  software = Uc3::Citation.fetch(doi: '10.1234/software.ef34', work_type: 'software')
+  require 'uc3-citation'
+
+  article = Uc3Citation.fetch(doi: '10.1234/article.ef34', work_type: 'article')
+  book = Uc3Citation.fetch(doi: 'https://doi.org/10.1234/book.ef34', work_type: 'book')
+  dmp = Uc3Citation.fetch(doi: 'https://dx.doi.org/10.1234/dmp.ef34', work_type: 'output_management_plan')
+  dataset = Uc3Citation.fetch(doi: 'doi:10.1234/dataset.ef34', work_type: 'dataset')
+  software = Uc3Citation.fetch(doi: '10.1234/software.ef34', work_type: 'software')
 
   # to display within a view:
   sanitize(software)
