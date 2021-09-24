@@ -11,7 +11,7 @@ module Uc3Citation
 
   # Create a new DOI
   # rubocop:disable Metrics/CyclomaticComplexity
-  def fetch_citation(doi:, work_type:, style: 'chicago-author-date', debug: false)
+  def fetch_citation(doi:, work_type: '', style: 'chicago-author-date', debug: false)
     return nil unless doi.present?
 
     uri = doi_to_uri(doi: doi)
