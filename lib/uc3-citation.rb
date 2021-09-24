@@ -23,7 +23,12 @@ module Uc3Citation
     Rails.logger.debug('Uc3Citation - Received BibTeX') if debug
     Rails.logger.debug(bibtex.data.inspect) if debug
 
-    citation = build_citation(uri: uri, work_type: work_type, bibtex: bibtex, style: style)
+    citation = build_citation(
+      uri: uri,
+      work_type: work_type.present? ? work_type : determine_work_type(bibtex: bibtex),
+      bibtex: bibtex,
+      style: style
+    )
     Rails.logger.debug('Uc3Citation - Citation accquired') if debug
     Rails.logger.debug(citation) if debug
 
@@ -42,6 +47,15 @@ module Uc3Citation
     return nil unless doi.present?
 
     doi.start_with?('http') ? doi : "#{api_base_url}/#{doi.gsub('doi:', '')}"
+  end
+
+  def determine_work_type(bibtex:)
+    return '' unless bibtex.present? && bibtex.data.first.present?
+
+    return 'article' if bibtex.data.first.journal.present?
+    return 'software' if bibtex.data.first.software.present?
+
+    ''
   end
 
   # Recursively call the URI for application/x-bibtex
