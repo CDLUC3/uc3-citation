@@ -29,8 +29,8 @@ module Uc3Citation
 
     citation
   rescue JSON::ParserError => e
-    Rails.logger.error "Uc3Citation - JSON parse error - #{e.message}")
-    Rails.logger.error e&.backtrace)
+    Rails.logger.error("Uc3Citation - JSON parse error - #{e.message}")
+    Rails.logger.error(e&.backtrace)
     nil
   end
   # rubocop:enable Metrics/CyclomaticComplexity
