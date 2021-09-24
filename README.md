@@ -35,11 +35,11 @@ Once installed you can then use the service like this:
   #
   require 'uc3-citation'
 
-  article = Uc3Citation.fetch(doi: '10.1234/article.ef34', work_type: 'article')
-  book = Uc3Citation.fetch(doi: 'https://doi.org/10.1234/book.ef34', work_type: 'book')
-  dmp = Uc3Citation.fetch(doi: 'https://dx.doi.org/10.1234/dmp.ef34', work_type: 'output_management_plan')
-  dataset = Uc3Citation.fetch(doi: 'doi:10.1234/dataset.ef34', work_type: 'dataset')
-  software = Uc3Citation.fetch(doi: '10.1234/software.ef34', work_type: 'software')
+  article = Uc3Citation.fetch_citation(doi: '10.1234/article.ef34', work_type: 'article')
+  book = Uc3Citation.fetch_citation(doi: 'https://doi.org/10.1234/book.ef34', work_type: 'book')
+  dmp = Uc3Citation.fetch_citation(doi: 'https://dx.doi.org/10.1234/dmp.ef34', work_type: 'output_management_plan')
+  dataset = Uc3Citation.fetch_citation(doi: 'doi:10.1234/dataset.ef34', work_type: 'dataset')
+  software = Uc3Citation.fetch_citation(doi: '10.1234/software.ef34', work_type: 'software')
 
   # to display within a view:
   sanitize(software)
