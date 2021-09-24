@@ -21,7 +21,7 @@ module Uc3Citation
 
     bibtex = BibTeX.parse(resp.body)
     Rails.logger.debug('Uc3Citation - Received BibTeX') if debug
-    Rails.logger.debug(bibtex.data.first.inspect) if debug
+    Rails.logger.debug(bibtex.data.inspect) if debug
 
     citation = build_citation(uri: uri, work_type: work_type, bibtex: bibtex, style: style)
     Rails.logger.debug('Uc3Citation - Citation accquired') if debug
