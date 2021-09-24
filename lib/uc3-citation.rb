@@ -14,7 +14,7 @@ module Uc3Citation
   def fetch_citation(doi:, work_type: 'dataset', style: 'chicago-author-date')
     return nil unless doi.present?
 
-    uri = doi_to_uri(id: doi)
+    uri = doi_to_uri(doi: doi)
     resp = fetch_bibtex(uri: uri)
     return nil unless resp.present? && resp.code == 200
 
@@ -30,10 +30,10 @@ module Uc3Citation
   private
 
   # Will convert 'doi:10.1234/abcdefg' to 'http://doi.org/10.1234/abcdefg'
-  def doi_to_uri(id:)
-    return nil unless id.present?
+  def doi_to_uri(doi:)
+    return nil unless doi.present?
 
-    id.start_with?('http') ? id : "#{api_base_url}/#{id.gsub('doi:', '')}"
+    doi.start_with?('http') ? doi : "#{api_base_url}/#{doi.gsub('doi:', '')}"
   end
 
   # Recursively call the URI for application/x-bibtex
@@ -66,7 +66,7 @@ module Uc3Citation
     #
     citation = citation.first.gsub(/{\\Textendash}/i, '-')
                               .gsub('{', '').gsub('}', '')
-                              .gsub(/\.”\s+/, "\.” [#{id.work_type.humanize}]. ")
+                              .gsub(/\.”\s+/, "\.” [#{work_type.humanize}]. ")
 
     # Convert the URL into a link. Ensure that the trailing period is not a part of
     # the link!
