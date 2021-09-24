@@ -11,7 +11,7 @@ module Uc3Citation
 
   # Create a new DOI
   # rubocop:disable Metrics/CyclomaticComplexity
-  def fetch_citation(doi:, work_type: 'dataset', style: 'chicago-author-date', debug: false)
+  def fetch_citation(doi:, work_type:, style: 'chicago-author-date', debug: false)
     return nil unless doi.present?
 
     uri = doi_to_uri(doi: doi)
@@ -74,7 +74,8 @@ module Uc3Citation
     #
     citation = citation.first.gsub(/{\\Textendash}/i, '-')
                               .gsub('{', '').gsub('}', '')
-                              .gsub(/\.”\s+/, "\.” [#{work_type.humanize}]. ")
+
+    citation = citation.gsub(/\.”\s+/, "\.” [#{work_type.humanize}]. ") if work_type.present?
 
     # Convert the URL into a link. Ensure that the trailing period is not a part of
     # the link!
