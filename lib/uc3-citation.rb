@@ -11,18 +11,26 @@ module Uc3Citation
 
   # Create a new DOI
   # rubocop:disable Metrics/CyclomaticComplexity
-  def fetch_citation(doi:, work_type: 'dataset', style: 'chicago-author-date')
+  def fetch_citation(doi:, work_type: 'dataset', style: 'chicago-author-date', debug: false)
     return nil unless doi.present?
 
     uri = doi_to_uri(doi: doi)
+    Rails.logger.debug("Uc3Citation - Fetching BibTeX from: '#{uri}'") if debug
     resp = fetch_bibtex(uri: uri)
     return nil unless resp.present? && resp.code == 200
 
     bibtex = BibTeX.parse(resp.body)
+    Rails.logger.debug('Uc3Citation - Received BibTeX') if debug
+    Rails.logger.debug(bibtex.data.first.inspect) if debug
 
-    build_citation(uri: uri, work_type: work_type, bibtex: bibtex, style: style)
+    citation = build_citation(uri: uri, work_type: work_type, bibtex: bibtex, style: style)
+    Rails.logger.debug('Uc3Citation - Citation accquired') if debug
+    Rails.logger.debug(citation) if debug
+
+    citation
   rescue JSON::ParserError => e
-    log_error(method: 'Uc3::Citation fetch JSON parse error', error: e)
+    Rails.logger.error "Uc3Citation - JSON parse error - #{e.message}")
+    Rails.logger.error e&.backtrace)
     nil
   end
   # rubocop:enable Metrics/CyclomaticComplexity
