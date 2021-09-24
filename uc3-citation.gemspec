@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 $LOAD_PATH.push File.expand_path('lib', __dir__)
-require 'uc3_citation/version'
+require 'uc3-citation/version'
 
 Gem::Specification.new do |spec|
   spec.name        = 'uc3-citation'
