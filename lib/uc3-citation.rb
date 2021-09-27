@@ -25,7 +25,7 @@ module Uc3Citation
 
 Rails.logger.debug("URI: #{uri}, work_type: #{determine_work_type(bibtex: bibtex)}") if debug
 
-    citation = build_citation(
+    citation = bibtex_to_citation(
       uri: uri,
       work_type: work_type.present? ? work_type : determine_work_type(bibtex: bibtex),
       bibtex: bibtex,
@@ -74,7 +74,7 @@ Rails.logger.debug("URI: #{uri}, work_type: #{determine_work_type(bibtex: bibtex
   end
 
   # Convert the BibTeX item to a citation
-  def build_citation(uri:, work_type:, bibtex:, style:)
+  def bibtex_to_citation(uri:, work_type:, bibtex:, style:)
 
 Rails.logger.debug("PASSED? #{uri.present?} && #{bibtex.data.first.id.present?}")
 
