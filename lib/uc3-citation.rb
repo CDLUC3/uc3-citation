@@ -52,8 +52,9 @@ module Uc3Citation
   def determine_work_type(bibtex:)
     return '' unless bibtex.present? && bibtex.data.first.present?
 
-    return 'article' if bibtex.data.first.journal.present?
-    return 'software' if bibtex.data.first.software.present?
+    entry = bibtex.data.first
+    return 'article' if entry.journal.present? || entry.journaltitle.present?
+    return 'book' if entry.booktitle.present?
 
     ''
   end
