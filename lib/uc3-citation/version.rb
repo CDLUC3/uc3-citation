@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module Uc3Citation
-  VERSION = '0.0.1-beta11'
+  VERSION = '0.0.1-beta12'
 end

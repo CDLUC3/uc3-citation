@@ -23,6 +23,8 @@ module Uc3Citation
     Rails.logger.debug('Uc3Citation - Received BibTeX') if debug
     Rails.logger.debug(bibtex.data.inspect) if debug
 
+Rails.logger.debug("URI: #{uri}, work_type: #{determine_work_type(bibtex: bibtex)}") if debug
+
     citation = build_citation(
       uri: uri,
       work_type: work_type.present? ? work_type : determine_work_type(bibtex: bibtex),
@@ -98,7 +100,7 @@ pp entry.inspect
     citation.gsub(URI.regexp) do |url|
       if url.start_with?('http')
         '<a href="%{url}" target="_blank">%{url}</a>.' % {
-          url: url.ends_with?('.') ? url[0..url.length - 2] : url
+          url: url.ends_with?('.') ? "#{uri}." : uri
         }
       else
         url
