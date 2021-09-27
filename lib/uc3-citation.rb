@@ -57,8 +57,6 @@ Rails.logger.debug("URI: #{uri}, work_type: #{determine_work_type(bibtex: bibtex
     entry = bibtex.data.first
     return 'article' if entry.journal.present?
 
-pp entry.inspect
-
     ''
   end
 
@@ -77,11 +75,18 @@ pp entry.inspect
 
   # Convert the BibTeX item to a citation
   def build_citation(uri:, work_type:, bibtex:, style:)
+
+Rails.logger.debug("PASSED? #{uri.present?} && #{bibtex.data.first.id.present?}")
+
     return nil unless uri.present? && bibtex.data.first.id.present?
 
     cp = CiteProc::Processor.new(style: style, format: 'html')
     cp.import(bibtex.to_citeproc)
     citation = cp.render(:bibliography, id: bibtex.data.first.id)
+
+Rails.logger.debug("ORIGINAL CITATION:")
+Rails.logger.debug(citation)
+
     return nil unless citation.present? && citation.any?
 
     # The CiteProc renderer has trouble with some things so fix them here
