@@ -23,8 +23,6 @@ module Uc3Citation
     Rails.logger.debug('Uc3Citation - Received BibTeX') if debug
     Rails.logger.debug(bibtex.data.inspect) if debug
 
-Rails.logger.debug("URI: #{uri}, work_type: #{determine_work_type(bibtex: bibtex)}") if debug
-
     citation = bibtex_to_citation(
       uri: uri,
       work_type: work_type.present? ? work_type : determine_work_type(bibtex: bibtex),
@@ -75,18 +73,11 @@ Rails.logger.debug("URI: #{uri}, work_type: #{determine_work_type(bibtex: bibtex
 
   # Convert the BibTeX item to a citation
   def bibtex_to_citation(uri:, work_type:, bibtex:, style:)
-
-Rails.logger.debug("PASSED? #{uri.present?} && #{bibtex.data.first.id.present?}")
-
-    return nil unless uri.present? && bibtex.data.first.id.present?
+    return nil unless uri.present? && bibtex.data.first.present?
 
     cp = CiteProc::Processor.new(style: style, format: 'html')
     cp.import(bibtex.to_citeproc)
     citation = cp.render(:bibliography, id: bibtex.data.first.id)
-
-Rails.logger.debug("ORIGINAL CITATION:")
-Rails.logger.debug(citation)
-
     return nil unless citation.present? && citation.any?
 
     # The CiteProc renderer has trouble with some things so fix them here
