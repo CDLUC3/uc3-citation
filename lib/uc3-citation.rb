@@ -53,8 +53,9 @@ module Uc3Citation
     return '' unless bibtex.present? && bibtex.data.first.present?
 
     entry = bibtex.data.first
-    return 'article' if entry.journal.present? || entry.journaltitle.present?
-    return 'book' if entry.booktitle.present?
+    return 'article' if entry.journal.present?
+
+pp entry.inspect
 
     ''
   end
