@@ -37,6 +37,10 @@ module Uc3Citation
     Rails.logger.error("Uc3Citation - JSON parse error - #{e.message}")
     Rails.logger.error(e&.backtrace)
     nil
+  rescue StandardError => e
+    Rails.logger.error("Uc3Citation - error - #{e.class.name}: #{e.message}")
+    Rails.logger.error(e&.backtrace)
+    nil
   end
   # rubocop:enable Metrics/CyclomaticComplexity
 
@@ -102,6 +106,15 @@ module Uc3Citation
         url
       end
     end
+  rescue URI::InvalidURIError => e
+    Rails.logger.log("Uc3Citation.bibtext_to_citation - URI: '#{uri}' - InvalidURIError: #{e.message}")
+    nil
+  rescue HTTParty::Error => e
+    Rails.logger.log("Uc3Citation.bibtext_to_citation - URI: '#{uri}' - HTTPartyError: #{e.message}")
+    nil
+  rescue SocketError => e
+    Rails.logger.log("Uc3Citation.bibtext_to_citation - URI: '#{uri}' - SocketError: #{e.message}")
+    nil
   end
 
 end
