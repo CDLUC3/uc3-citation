@@ -40,7 +40,7 @@ The `fetch_citation` method accepts the following arguments:
 - **style**: Default is 'chicago-author-date'. You can specify [any of the CSL defined in this list](https://github.com/citation-style-language/styles-distribution/tree/f8524f9b9df60e94e98f824f242a1fb27cc9fc59)
 - **debug**: Default is false. If true it will log the results of the request for the BibTeX metadata from the DOI registrar and the result of the citation generation from the CitProc library
 
-Although unlikely, since citations are acquired from external sources, it is a good idea to wrap the citation in the sanitize method when displaying on a View to prevent any malicious HTML. For example: `sanitize(article)`
+Although unlikely, since citations are acquired from external sources, it is a good idea to wrap the citation in a sanitization method when displaying on a web page to prevent any malicious HTML. For example in a Rails view you can use: `sanitize(article)`
 
 You should consider the fact that this gem calls out to external systems when incorporating it into your projects. For example adding to a Model or Controller method in Rails can potentially cause slow response times. You may want to use ActiveJob or at the very least an `after_save` callback to prevent it from slowing down the Rails thread that is handling the Request-Response cycle.
 
