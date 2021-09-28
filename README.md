@@ -13,7 +13,7 @@ For example `Uc3::Citation.fetch(doi: '10.1234/article.ef34', work_type: 'articl
 ## Basic Usage -
 
 Add the following to your Gemfile and then run bundle install:
-`gem 'uc3-citation', git: 'https://github.com/CDLUC3/uc3-citation', branch: 'main''
+`gem 'uc3-citation', git: 'https://github.com/CDLUC3/uc3-citation', branch: 'main'`
 
 Once installed you can then use the service like this:
 ```ruby
@@ -33,14 +33,36 @@ Once installed you can then use the service like this:
   #   Diet of Common Predatory Coral Reef Fishes.” [Article]. Coral Reefs 31 (2): 383–88.
   #   https://doi.org/10.1007/s00338-011-0845-0
   #
-  require 'uc3-citation'
+  class YourClass
+    include Uc3Citation
 
-  article = Uc3Citation.fetch_citation(doi: '10.1234/article.ef34', work_type: 'article')
-  book = Uc3Citation.fetch_citation(doi: 'https://doi.org/10.1234/book.ef34', work_type: 'book')
-  dmp = Uc3Citation.fetch_citation(doi: 'https://dx.doi.org/10.1234/dmp.ef34', work_type: 'output_management_plan')
-  dataset = Uc3Citation.fetch_citation(doi: 'doi:10.1234/dataset.ef34', work_type: 'dataset')
-  software = Uc3Citation.fetch_citation(doi: '10.1234/software.ef34', work_type: 'software')
+    article = fetch_citation(
+      doi: 'https://doi.org/10.3897/BDJ.9.e67426',
+      work_type: 'dataset'
+    )
 
-  # to display within a view:
-  sanitize(software)
+    p article
+    # Will display:
+    #
+    # Reboleira, Ana Sofia, and Rita Eus\'ebio. 2021. “Cave-Adapted Beetles from Continental
+    # Portugal.” [Dataset]. Biodiversity Data Journal 9 (August).
+    # https://doi.org/10.3897/BDJ.9.e67426.
+  end
 ```
+
+The `fetch_citation` method accepts the follwoing arguments:
+- **doi**: The fully qualified URl or the DOI as a string. (e.g. 'https://doi.org/10.3897/BDJ.9.e67426', 'doi:10.3897/BDJ.9.e67426', or '10.3897/BDJ.9.e67426'). In the case where you are only passing the DOI, it will prepend 'https://doi.org/' when trying to acquire the citation. If the DOI is not resolvable from that domain then you will need to send the full URL
+- **work_type**: Default is nil. If present, the value you will added to the citation after the title to provide context as to what type of work the DOI represents. See example above.
+- **style**: Default is 'chicago-author-date'. You can specify [any of the CSL defined in this list](https://github.com/citation-style-language/styles-distribution/tree/f8524f9b9df60e94e98f824f242a1fb27cc9fc59)
+- **debug**: Default is false. If true it will log the results of the request for the BibTeX metadata from the DOI registrar and the result of the citation generation from the CitProc library
+
+Although unlikely, since citations are acquired from external sources, it is a good idea to wrap the citation in the sanitize method when displaying on a View to prevent any malicious HTML. For example: `sanitize(article)`
+
+## Troubleshooting
+
+If you are not receiving a citation for a specific DOI and you believe you should, you should:
+
+1. Verify that the DOI is able to produce the BibTeX format. For exmaple: `curl -vLH 'Accept: application/x-bibtex' https://doi.org/10.3897/BDJ.9.e67426`
+2. Specify `debug: true` when calling `fetch_citation` which will output the BibTex and CiteProc responses to your log file.
+
+NOTE that errors encountered by the gem are always written to the logs regardless of the `:debug` flag specification
