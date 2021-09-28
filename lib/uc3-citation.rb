@@ -46,7 +46,7 @@ module Uc3Citation
   def doi_to_uri(doi:)
     return nil unless doi.present?
 
-    doi.start_with?('http') ? doi : "#{api_base_url}/#{doi.gsub('doi:', '')}"
+    doi.start_with?('http') ? doi : "#{DEFAULT_DOI_URL}/#{doi.gsub('doi:', '')}"
   end
 
   def determine_work_type(bibtex:)
