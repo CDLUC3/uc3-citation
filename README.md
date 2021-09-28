@@ -34,9 +34,9 @@ Once installed you can then use the service like this:
   end
 ```
 
-The `fetch_citation` method accepts the follwoing arguments:
+The `fetch_citation` method accepts the following arguments:
 - **doi**: The fully qualified URl or the DOI as a string. (e.g. 'https://doi.org/10.3897/BDJ.9.e67426', 'doi:10.3897/BDJ.9.e67426', or '10.3897/BDJ.9.e67426'). In the case where you are only passing the DOI, it will prepend 'https://doi.org/' when trying to acquire the citation. If the DOI is not resolvable from that domain then you will need to send the full URL
-- **work_type**: Default is nil. If present, the value you will added to the citation after the title to provide context as to what type of work the DOI represents. See example above.
+- **work_type**: Default is nil. If present, the value you specify will be added to the citation after the title to provide context as to what type of work the DOI represents. See example above.
 - **style**: Default is 'chicago-author-date'. You can specify [any of the CSL defined in this list](https://github.com/citation-style-language/styles-distribution/tree/f8524f9b9df60e94e98f824f242a1fb27cc9fc59)
 - **debug**: Default is false. If true it will log the results of the request for the BibTeX metadata from the DOI registrar and the result of the citation generation from the CitProc library
 
