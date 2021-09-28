@@ -1,4 +1,4 @@
-Rubygem uc3-citation
+uc3-citation
 ===============
 
 A library that retrieves an citation for the specified DOI following the Chicago Author-Date standard.
