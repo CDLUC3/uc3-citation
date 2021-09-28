@@ -14,7 +14,7 @@ module Uc3Citation
   def fetch_citation(doi:, work_type: '', style: 'chicago-author-date', debug: false)
     return nil unless doi.present?
 
-    uri = doi_to_uri(doi: doi)
+    uri = doi_to_uri(doi: doi.strip)
     Rails.logger.debug("Uc3Citation - Fetching BibTeX from: '#{uri}'") if debug
     resp = fetch_bibtex(uri: uri)
     return nil unless resp.present? && resp.code == 200
