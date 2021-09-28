@@ -17,22 +17,6 @@ Add the following to your Gemfile and then run bundle install:
 
 Once installed you can then use the service like this:
 ```ruby
-  # Send the DOI (fully qualified URL is preferred). If its just a doi,
-  # then 'https://doi.org/ will be prepended when trying to acquire the citation
-  #
-  # The :work_type default is 'dataset'. You can send any value here, it gets appended to
-  # the citation after the title. For example sending:
-  #   `Uc3::Citation.fetch(
-  #      doi: 'https://doi.org/10.1007/s00338-011-0845-0',
-  #      work_type: 'article'
-  #    )`
-  #
-  # Results in the following citation:
-  #   Leray, M., J. T. Boehm, S. C. Mills, and C. P. Meyer. 2011. “Moorea BIOCODE Barcode
-  #   Library as a Tool for Understanding Predator-Prey Interactions: Insights into the
-  #   Diet of Common Predatory Coral Reef Fishes.” [Article]. Coral Reefs 31 (2): 383–88.
-  #   https://doi.org/10.1007/s00338-011-0845-0
-  #
   class YourClass
     include Uc3Citation
 
