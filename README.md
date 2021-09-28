@@ -58,6 +58,8 @@ The `fetch_citation` method accepts the follwoing arguments:
 
 Although unlikely, since citations are acquired from external sources, it is a good idea to wrap the citation in the sanitize method when displaying on a View to prevent any malicious HTML. For example: `sanitize(article)`
 
+You should consider the fact that this gem calls out to external systems when incorporating it into your projects. For example adding to a Model or Controller method in Rails can potentially cause slow response times. You may want to use ActiveJob or at the very least an `after_save` callback to prevent it from slowing down the Rails thread that is handling the Request-Response cycle.
+
 ## Troubleshooting
 
 If you are not receiving a citation for a specific DOI and you believe you should, you should:
