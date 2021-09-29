@@ -1,7 +1,7 @@
 uc3-citation
 ===============
 
-A library that retrieves an citation for the specified DOI following the Chicago Author-Date standard.
+A library that generates a citation for the specified DOI.
 
 This service makes a request to the DOI registrar and asks for the BibTeX version of the DOI's metadata.
 
