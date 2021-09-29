@@ -10,10 +10,14 @@ If BibTeX metadata is received the service will use the CiteProc gem to build a 
 You can override the default Chicago style by specifying one from the list of CSLs located in the following repository: https://github.com/citation-style-language/styles-distribution/tree/f8524f9b9df60e94e98f824f242a1fb27cc9fc59
 For example `Uc3::Citation.fetch(doi: '10.1234/article.ef34', work_type: 'article', style: 'apa')`
 
-## Basic Usage -
+## Installation -
 
-Add the following to your Gemfile and then run bundle install:
-`gem 'uc3-citation', git: 'https://github.com/CDLUC3/uc3-citation', branch: 'main'`
+Run `gem install uc3-citation`
+
+Or add it to your project's Gemfile and then run bundle install:
+`gem 'uc3-citation'`
+
+## Basic Usage -
 
 Once installed you can then use the service like this:
 ```ruby
